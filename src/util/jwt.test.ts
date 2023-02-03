@@ -1,0 +1,14 @@
+import { parseJwt } from './jwt';
+
+const ID_TOKEN =
+  'eyJraWQiOiJLa0NNK0NsbVBMV0tyOFVjZU15a3RcLzcrRGc1ZEhZZ3Z6TlBINVJydDJtWT0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNm9oQ2pMcVU2dG1WMllicG9KSUFWUSIsInN1YiI6ImM3ZGIyOTU1LTExNGYtNDIwYy04YzMwLTA5MmFkNzMxZjc2NSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9zWnJMdHdMSXQiLCJjb2duaXRvOnVzZXJuYW1lIjoiYzdkYjI5NTUtMTE0Zi00MjBjLThjMzAtMDkyYWQ3MzFmNzY1Iiwib3JpZ2luX2p0aSI6IjQwNmZkZmQ0LTkwZWQtNDMwZi1hODI3LWFkZTU2NGJjYzY1NyIsImF1ZCI6IjJtbjd1ZXE3MzFkbXBtaWxmY29paXFhMzFsIiwiZXZlbnRfaWQiOiJiMjFiMmEzMi0yM2UyLTRjZjktYjcyYi1iZTA5MDljOWYzMmIiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY1ODQ4MzIxOCwiZXhwIjoxNjU4NDg0NjQyLCJpYXQiOjE2NTg0ODQzNDIsImp0aSI6IjE4NDNmYTA4LTNlMjgtNDhlNy1iMDJhLTY0ZjkzYTA4Y2Q1NSIsImVtYWlsIjoicGhhcnNvbkBhaXJ0ZWNobm9sb2d5LmlvIn0.GK3r_DPCfdXLCohUOhgwGRiMy-W8UQJR9PSf87jjeB7twK1J5roBYMFF6DUYOFReeGlAFriKwq6bs5aKkocpHFhhCtOr3VYcWrVlRLuxWe_ui_IFGsSlpg_szpge7qx0D6udBiNrCyGu-1gYzvY3MU0yEulgFFKKm6_PfBu3s_cjg2-IPr_Ihu9cLMwFjg61XREQqhcWYX0rsqcRhEz2CeZX0Pc17oTgP0rxzs0FfBk8_qvGc-QYFp82D16UlSSMdfrhpWceXvTwHjvWAofjdhKPfNnUtiGbAhjQsDpsp0lgsuFh0BpeHsnYKWwU9GbRfrD1uBFx34n5k4CYuLN7kg';
+
+describe('utils/jwt', () => {
+  describe('parseJwt', () => {
+    test('decodes ID token', () => {
+      const parsedIdToken = parseJwt(ID_TOKEN);
+
+      expect(parsedIdToken.email).toBe('pharson@airtechnology.io');
+    });
+  });
+});

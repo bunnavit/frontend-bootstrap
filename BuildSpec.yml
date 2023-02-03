@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16.x
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+
+      - echo Removing proxies...
+      - npm config get proxy
+      - npm config rm proxy
+      - npm config rm https-proxy
+
+      - echo Building front-end...
+      - npm run build
+  post_build:
+    on-failure: CONTINUE
+    commands:
+      - aws s3 cp --recursive --acl public-read ./build s3://${DEPLOY_BUCKET}/
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${DEPLOY_BUCKET}/
+      - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION} --paths /index.html
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
