@@ -1,3 +1,5 @@
+import { describe, expect, test } from 'vitest';
+
 import { parseJwt } from './jwt';
 
 const ID_TOKEN =

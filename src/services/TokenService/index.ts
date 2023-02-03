@@ -1,4 +1,4 @@
-import { parseJwt } from 'util/jwt';
+import { parseJwt } from '../../util/jwt';
 import * as LocalStorage from '../LocalStorage';
 import { LocalStorageKey } from '../LocalStorage';
 
