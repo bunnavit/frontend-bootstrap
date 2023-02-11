@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useColorScheme } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { SPECIAL_COLORS } from '../../theme';
 
 export const useColorModeValue = (lightValue: string, darkValue: string): string => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
   const value = useMemo(
     () =>

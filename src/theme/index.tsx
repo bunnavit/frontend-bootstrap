@@ -1,4 +1,5 @@
-import { MantineThemeColorsOverride, MantineThemeOverride } from '@mantine/core';
+import React from 'react';
+import { MantineThemeColorsOverride, MantineThemeOverride, Global } from '@mantine/core';
 
 export const SPECIAL_COLORS = [
   'sYellow',
@@ -45,6 +46,18 @@ const colors: MantineThemeColorsOverride = {
     '#ffffffcc',
     '#ffffffeb',
   ],
+  blackAlpha: [
+    'rgba(0, 0, 0, 0.04)',
+    'rgba(0, 0, 0, 0.06)',
+    'rgba(0, 0, 0, 0.08)',
+    'rgba(0, 0, 0, 0.16)',
+    'rgba(0, 0, 0, 0.24)',
+    'rgba(0, 0, 0, 0.36)',
+    'rgba(0, 0, 0, 0.48)',
+    'rgba(0, 0, 0, 0.64)',
+    'rgba(0, 0, 0, 0.80)',
+    'rgba(0, 0, 0, 0.92)',
+  ],
 };
 
 export const theme: MantineThemeOverride = {
@@ -54,4 +67,8 @@ export const theme: MantineThemeOverride = {
   },
   fontFamilyMonospace: 'Ubuntu Mono, monospace',
   colors,
+};
+
+export const CustomFonts = () => {
+  return <Global styles={[]} />;
 };

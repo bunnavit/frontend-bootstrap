@@ -3,8 +3,10 @@ import { faArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { Button, Text } from '@mantine/core';
+import { useColorModeValue } from '../../../hooks/useColorModeValue';
 
 export const NewAccountFooter = () => {
+  const textColor = useColorModeValue('white', 'dark');
   const navigate = useNavigate();
 
   const handleNewAccountClick = () => {
@@ -13,10 +15,12 @@ export const NewAccountFooter = () => {
 
   return (
     <>
-      <Text size="xl" weight="bold">
+      <Text color={textColor} size="xl" weight="bold">
         Need to create an account?
       </Text>
       <Button
+        variant="white"
+        color="dark"
         onClick={handleNewAccountClick}
         size="lg"
         leftIcon={<FontAwesomeIcon icon={faArrowRight} />}

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { Flex, Box, Alert, Title } from '@mantine/core';
+import { Flex, Box, Alert, Title, Text } from '@mantine/core';
 import { faCircleExclamation } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as Icon } from '../../assets/coreograph-logo.svg';
@@ -41,19 +41,28 @@ export const AccountPageLayout = (props: AccountPageLayoutProps) => {
           borderTop: '11px solid',
           borderTopColor: theme.colors.sYellow,
         })}
-        p={{ base: 8, md: '50px 110px' }}
+        p={{ base: 40, md: '50px 110px' }}
       >
-        <Box w={{ base: '100%', sm: '80%', md: '447px' }}>
+        <Box w={{ base: '80%', sm: '60%', md: '447px' }}>
           <Icon />
         </Box>
 
-        <Title color="black" mt={12} mb={8}>
+        <Title color="black" mt={24} mb={16} weight="bold">
           {title}
         </Title>
 
         {errorMessage && (
-          <Alert icon={<FontAwesomeIcon icon={faCircleExclamation} />} color="red" mb={4}>
-            {errorMessage}
+          <Alert
+            variant="filled"
+            pt={15}
+            icon={<FontAwesomeIcon icon={faCircleExclamation} size="lg" color="tomato" />}
+            color="red.2"
+            fz="lg"
+            mb={10}
+          >
+            <Text fz="md" color="black">
+              {errorMessage}
+            </Text>
           </Alert>
         )}
 
@@ -68,7 +77,7 @@ export const AccountPageLayout = (props: AccountPageLayoutProps) => {
           w={CONTAINER_WIDTH}
           bg={footerBackgroundColor}
           sx={{ borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}
-          p={{ base: 8, md: '32px 110px' }}
+          p={{ base: '2rem', md: '32px 110px' }}
         >
           {footerContent}
         </Box>
