@@ -19,6 +19,7 @@ export const AccountPageLayout = (props: AccountPageLayoutProps) => {
   const { title, children, errorMessage, footerContent } = props;
 
   const backgroundColor = useColorModeValue('sLightBlue', 'whiteAlpha.2');
+
   const footerBackgroundColor = useColorModeValue('sPink', 'sPalePink');
 
   return (
