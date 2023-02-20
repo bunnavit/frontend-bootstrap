@@ -8,10 +8,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { logInRequest, LoginRequestData } from '../../api/Identity';
+import { useQueryClient } from '@tanstack/react-query';
+import { showNotification } from '@mantine/notifications';
+
+import { useNavigate } from 'react-router-dom';
+import { LoginRequestData, logInRequest, postLogout } from '../../api/Identity';
+import { getIsAdminFromIdToken, hasJWTs } from '../../services/TokenService';
 
 export type UserContextValues = {
-  signIn: (data: LoginRequestData) => Promise<void>;
+  signIn: (data: LoginRequestData) => Promise<{ isAdmin: boolean }>;
+  logOut: () => Promise<void>;
   isAdmin: boolean;
   setIsAdmin: Dispatch<SetStateAction<boolean>>;
   isAuthed: boolean;
@@ -26,23 +32,49 @@ type UserContextProviderProps = {
 };
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [isAuthed, setIsAuthed] = useState(true);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const signIn = useCallback(async (data: LoginRequestData) => {
-    await logInRequest(data);
-    setIsAuthed(true);
-  }, []);
+  const [isAdmin, setIsAdmin] = useState(getIsAdminFromIdToken());
+  const [isAuthed, setIsAuthed] = useState(hasJWTs());
+
+  const signIn = useCallback(
+    async (data: LoginRequestData): Promise<{ isAdmin: boolean }> => {
+      await logInRequest(data);
+      setIsAuthed(true);
+      const isAdminValue = getIsAdminFromIdToken();
+      setIsAdmin(isAdminValue);
+      return { isAdmin: isAdminValue };
+    },
+    []
+  );
+
+  const logOut = useCallback(async () => {
+    // Invalidate all queries
+    queryClient.clear();
+    setIsAdmin(false);
+    setIsAuthed(false);
+
+    postLogout();
+
+    showNotification({
+      title: 'Logged out',
+      color: 'green',
+      message: 'Successfully logged out',
+    });
+    navigate('/login');
+  }, [navigate, queryClient]);
 
   const value: UserContextValues = useMemo(
     () => ({
       signIn,
+      logOut,
       isAdmin,
       setIsAdmin,
       isAuthed,
       setIsAuthed,
     }),
-    [isAdmin, setIsAdmin, isAuthed, setIsAuthed, signIn]
+    [isAdmin, setIsAdmin, isAuthed, setIsAuthed, signIn, logOut]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

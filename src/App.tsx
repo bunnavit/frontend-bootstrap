@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 
@@ -13,10 +14,19 @@ import { Root } from './views/Root';
 
 import './App.css';
 import { theme } from './theme';
-import { AppView } from './views/AppView';
 import { UserContextProvider } from './context/useUserContext';
+import { AppView } from './views/AppView';
+import { Home } from './views/Home';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // set stale time to 5 minutes
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -30,6 +40,16 @@ const router = createBrowserRouter([
       {
         path: 'app',
         element: <AppView />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="home" />,
+          },
+          {
+            path: 'home',
+            element: <Home />,
+          },
+        ],
       },
       {
         path: 'login',

@@ -39,3 +39,22 @@ export const getEmailFromIdToken = () => {
     return undefined;
   }
 };
+
+export const getIsAdminFromIdToken = () => {
+  const idToken = LocalStorage.get('idToken');
+  if (!idToken) return false;
+
+  try {
+    const parsedToken = parseJwt(idToken);
+    return parsedToken['custom:UserType'] === 'admin';
+  } catch {
+    return false;
+  }
+};
+
+export const hasJWTs = () => {
+  const hasAccessToken = !!LocalStorage.get('accessToken');
+  const hasIdToken = !!LocalStorage.get('idToken');
+  const hasRefreshToken = !!LocalStorage.get('refreshToken');
+  return hasAccessToken && hasIdToken && hasRefreshToken;
+};
