@@ -17,6 +17,7 @@ import {
   PasswordInput,
   TextInput,
   List,
+  Select,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { RegisterRequestData, signUpRequest } from '../../../api/Identity';
@@ -73,6 +74,7 @@ export const RegisterPage = () => {
       username: '',
       password: '',
       password2: '',
+      UserType: undefined,
     },
   });
 
@@ -141,6 +143,19 @@ export const RegisterPage = () => {
 
       <form onSubmit={onSubmit((data) => handleSubmit(data))}>
         <Stack spacing={12} color="black">
+          <Select
+            size="lg"
+            id="userType"
+            label="User type"
+            defaultValue=""
+            data={[
+              { value: '', label: 'User' },
+              { value: 'admin', label: 'Admin' },
+            ]}
+            {...getInputProps('UserType')}
+            error={errors.UserType}
+          />
+
           <TextInput
             size="lg"
             id="email"

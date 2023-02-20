@@ -9,7 +9,7 @@ const NAV_LINKS: NavigationLink[] = [
   { to: 'home', icon: faHome, label: 'Home', color: 'teal' },
 ];
 
-export const AppView = () => {
+export const AdminView = () => {
   return (
     <PageLayout navigationLinks={NAV_LINKS}>
       <Outlet />

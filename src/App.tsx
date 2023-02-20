@@ -17,6 +17,7 @@ import { theme } from './theme';
 import { UserContextProvider } from './context/useUserContext';
 import { AppView } from './views/AppView';
 import { Home } from './views/Home';
+import { AdminView } from './views/AdminView';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,20 @@ const router = createBrowserRouter([
       {
         path: 'app',
         element: <AppView />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="home" />,
+          },
+          {
+            path: 'home',
+            element: <Home />,
+          },
+        ],
+      },
+      {
+        path: 'admin',
+        element: <AdminView />,
         children: [
           {
             index: true,

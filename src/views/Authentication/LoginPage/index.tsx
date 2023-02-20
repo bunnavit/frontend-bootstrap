@@ -36,8 +36,6 @@ export const LoginPage = () => {
 
   // VerifyEmailPage will pass this in the location
   const username = state?.username;
-  // Get page the user tried to visit earlier if it exists; default to 'home' page.
-  const from = state?.from?.pathname ?? '/';
 
   useEffect(() => {
     // username is defined when redirected from VerifyEmailPage (successful verification)
@@ -68,12 +66,16 @@ export const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      await signIn(data);
+      const { isAdmin } = await signIn(data);
 
       setIsLoading(false);
 
-      // Send user back to the page they tried to visit before being redirected to the login page
-      navigate(from, { replace: true });
+      // Send user back to the page before being redirected to the login page if it exists
+      // else redirect to admin or customer page depending on userType
+      navigate(state?.from?.pathname ?? (isAdmin ? '/admin' : '/app'), {
+        replace: true,
+        state: { isAdmin },
+      });
     } catch (error) {
       setIsLoading(false);
       if (axios.isAxiosError(error) && error.response?.status === 400) {
