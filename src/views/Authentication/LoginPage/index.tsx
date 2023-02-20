@@ -91,7 +91,7 @@ export const LoginPage = () => {
       footerContent={<NewAccountFooter />}
     >
       <form onSubmit={onSubmit((values) => handleSubmit(values))}>
-        <Stack spacing={25} color="black">
+        <Stack spacing={25}>
           <TextInput
             size="lg"
             id="email"
@@ -125,7 +125,7 @@ export const LoginPage = () => {
             <Button
               size="md"
               variant="subtle"
-              color="blue.6"
+              color="blue.5"
               onClick={() => navigate('/reset-password')}
             >
               Forgot my password

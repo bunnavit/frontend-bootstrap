@@ -1,16 +1,6 @@
-import React from 'react';
-import { MantineThemeColorsOverride, MantineThemeOverride, Global } from '@mantine/core';
+import { MantineThemeColorsOverride, MantineThemeOverride } from '@mantine/core';
 
-export const SPECIAL_COLORS = [
-  'sYellow',
-  'sPink',
-  'sPalePink',
-  'sTeal',
-  'sLightBlue',
-  'sDarkBlue',
-];
-
-const colors: MantineThemeColorsOverride = {
+export const themeColors = {
   // Positive buttons/calls-to-action
   blue: [
     '#dcf7ff',
@@ -58,7 +48,7 @@ const colors: MantineThemeColorsOverride = {
     'rgba(0, 0, 0, 0.80)',
     'rgba(0, 0, 0, 0.92)',
   ],
-};
+} as const;
 
 export const theme: MantineThemeOverride = {
   fontFamily: 'Quicksand, sans-serif',
@@ -66,9 +56,5 @@ export const theme: MantineThemeOverride = {
     fontFamily: 'Raleway, sans-serif',
   },
   fontFamilyMonospace: 'Ubuntu Mono, monospace',
-  colors,
-};
-
-export const CustomFonts = () => {
-  return <Global styles={[]} />;
+  colors: themeColors as MantineThemeColorsOverride,
 };

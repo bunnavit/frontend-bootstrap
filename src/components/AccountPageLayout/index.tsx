@@ -5,6 +5,7 @@ import { faCircleExclamation } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as Icon } from '../../assets/coreograph-logo.svg';
 import { useColorModeValue } from '../../hooks/useColorModeValue';
+import { themeColors } from '../../theme';
 
 type AccountPageLayoutProps = {
   children: ReactNode;
@@ -18,9 +19,15 @@ const CONTAINER_WIDTH = { base: '100%', md: '80%', lg: '764px' };
 export const AccountPageLayout = (props: AccountPageLayoutProps) => {
   const { title, children, errorMessage, footerContent } = props;
 
-  const backgroundColor = useColorModeValue('sLightBlue', 'whiteAlpha.2');
+  const backgroundColor = useColorModeValue(
+    themeColors.sLightBlue,
+    themeColors.whiteAlpha[2]
+  );
 
-  const footerBackgroundColor = useColorModeValue('sPink', 'sPalePink');
+  const footerBackgroundColor = useColorModeValue(
+    themeColors.sPink,
+    themeColors.sPalePink
+  );
 
   return (
     <Flex
@@ -36,19 +43,19 @@ export const AccountPageLayout = (props: AccountPageLayoutProps) => {
         align="center"
         w={CONTAINER_WIDTH}
         bg="white"
-        sx={(theme) => ({
+        sx={{
           borderTopLeftRadius: '10px',
           borderTopRightRadius: '10px',
           borderTop: '11px solid',
-          borderTopColor: theme.colors.sYellow,
-        })}
+          borderTopColor: themeColors.sYellow,
+        }}
         p={{ base: 40, md: '50px 110px' }}
       >
         <Box w={{ base: '80%', sm: '60%', md: '447px' }}>
           <Icon />
         </Box>
 
-        <Title color="black" mt={24} mb={16} weight="bold">
+        <Title mt={24} mb={16} weight="bold">
           {title}
         </Title>
 

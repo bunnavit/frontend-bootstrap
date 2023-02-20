@@ -70,7 +70,7 @@ export const ResetPasswordPage = () => {
             error={errors.username}
           />
 
-          <Group spacing={24} mt={24}>
+          <Group spacing={6} mt={24}>
             <Button
               type="submit"
               color="blue.5"
@@ -80,7 +80,7 @@ export const ResetPasswordPage = () => {
             >
               Reset password
             </Button>
-            <Button variant="subtle" onClick={() => navigate('/login')}>
+            <Button size="md" variant="subtle" onClick={() => navigate('/login')}>
               Back to login
             </Button>
           </Group>
