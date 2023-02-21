@@ -1,8 +1,9 @@
 version: 0.2
 phases:
   install:
-    runtime-versions:
-      nodejs: 16.x
+    commands:
+      # Install node version in .nvmrc
+      - n `cat $CODEBUILD_SRC_DIR/.nvmrc`
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
@@ -21,10 +22,10 @@ phases:
   post_build:
     on-failure: CONTINUE
     commands:
-      - aws s3 cp --recursive --acl public-read ./dist s3://${DEPLOY_BUCKET}/
-      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./dist/index.html s3://${DEPLOY_BUCKET}/
+      - aws s3 cp --recursive --acl public-read ./build s3://${DEPLOY_BUCKET}/
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${DEPLOY_BUCKET}/
       - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION} --paths /index.html
 artifacts:
   files:
     - '**/*'
-  base-directory: dist
+  base-directory: build
