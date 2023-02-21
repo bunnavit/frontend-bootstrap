@@ -46,7 +46,7 @@ export const PageLayout = (props: PageLayoutProps) => {
         >
           <Navbar.Section grow={true}>
             {navigationLinks.map((navigationLink) => (
-              <NavLinkButton {...navigationLink} />
+              <NavLinkButton key={navigationLink.label} {...navigationLink} />
             ))}
           </Navbar.Section>
 

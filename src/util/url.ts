@@ -28,3 +28,7 @@ export const getRequestHeaders = (type: RequestType) => {
 export const getIdentityUrl = () => {
   return import.meta.env.VITE_IDENTITY_URL;
 };
+
+export const getWebsocketUrl = () => {
+  return import.meta.env.VITE_WEBSOCKET_URL;
+};

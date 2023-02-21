@@ -15,6 +15,12 @@ export const getJWTAuthBearer = (): string => {
   return `id_token=${idToken},access_token=${accessToken},refresh_token=${refreshToken}`;
 };
 
+export const getWebsocketAuthParams = () => {
+  const idToken = LocalStorage.get('idToken');
+  const refreshToken = LocalStorage.get('refreshToken');
+  return `?Authorization=id_token=${idToken},refresh_token=${refreshToken}`;
+};
+
 export const storeJWTs = (JWTs: JWTsObject) => {
   Object.entries(JWTs).forEach(([tokenKey, tokenValue]) => {
     if (tokenValue !== undefined)
