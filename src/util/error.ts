@@ -13,3 +13,7 @@ export const getErrorMessage = (
 
   return error instanceof Error ? error.message : defaultMessage;
 };
+
+export const isForbiddenError = (error: unknown) => {
+  return axios.isAxiosError(error) && error.response?.status === 403;
+};

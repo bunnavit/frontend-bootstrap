@@ -4,21 +4,24 @@ import { getWebsocketAuthParams } from '../TokenService';
 
 export type SessionConnectHandler = (ev: Event) => any;
 export type SessionMessageHandler = (ev: MessageEvent<any>) => any;
-export type SessionDisconnectHandler = (ev: Event) => any;
-export type SessionSendHandler = (args: Data) => any;
-
-// temporary
-export type Message = {
-  action: 'sendmessage';
-  data: Object;
-};
-
-export type Data = Object;
+export type SessionDisconnectHandler = (ev: CloseEvent) => any;
+export type SessionSendHandler = (args: Message) => any;
 
 export type ConnectFN = () => void;
 
-export type SessionHook = [ConnectFN, (args: Data) => void, () => void];
-export type PauseHandlerHook = [(fn: ConnectFN) => void, () => void];
+export type SessionHook = [
+  WebSocket | undefined,
+  ConnectFN,
+  (args: Message) => void,
+  () => void
+];
+
+type BaseMessage = {
+  action: string;
+  operation: string;
+};
+
+export type Message = BaseMessage & Record<string, any>;
 
 export const useSession = (
   onOpen: SessionConnectHandler,
@@ -62,17 +65,13 @@ export const useSession = (
     setSession(ws);
   }, []);
 
-  const sendMessage = (args: Data) => {
-    const message: Message = {
-      action: 'sendmessage',
-      data: JSON.stringify(args),
-    };
-    session.send(JSON.stringify(message));
+  const sendMessage = (data: Message) => {
+    session?.send(JSON.stringify(data));
   };
 
   const close = useCallback(() => {
     if (session.readyState === session.OPEN) session.close();
   }, [session]);
 
-  return [connect, sendMessage, close];
+  return [session, connect, sendMessage, close];
 };

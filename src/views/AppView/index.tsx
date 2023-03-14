@@ -4,15 +4,18 @@ import { Outlet } from 'react-router-dom';
 
 import { PageLayout } from '../../components/PageLayout';
 import { NavigationLink } from '../../components/PageLayout/NavLinkButton';
+import { useUserContext } from '../../context/useUserContext';
+import { SessionExpire } from '../../components/SessionExpire';
 
 const NAV_LINKS: NavigationLink[] = [
-  { to: 'home', icon: faHome, label: 'Home', color: 'teal' },
+  { to: '/app/home', icon: faHome, label: 'Home', color: 'teal' },
 ];
 
 export const AppView = () => {
+  const { isAuthed } = useUserContext();
   return (
     <PageLayout navigationLinks={NAV_LINKS}>
-      <Outlet />
+      {isAuthed ? <Outlet /> : <SessionExpire />}
     </PageLayout>
   );
 };

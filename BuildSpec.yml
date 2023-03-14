@@ -1,11 +1,45 @@
 version: 0.2
+env:
+  secrets-manager:
+    GITHUB_TOKEN: '<CHANGENAME>-frontend-github:<CHANGENAME>-frontend-github'
 phases:
   install:
     commands:
       # Install node version in .nvmrc
       - n `cat $CODEBUILD_SRC_DIR/.nvmrc`
+
+      # Install jq
+      - sudo apt install jq
+
+      # Install curl
+      - type -p curl >/dev/null || sudo apt install curl -y
+
+      # Install gh
+      - |
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && sudo apt update \
+          && sudo apt install gh -y
+
   pre_build:
     commands:
+      - echo Creating a github deployment...
+      - |
+        response=$(gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/$REPO_OWNER/$REPO_NAME/deployments \
+          -f ref=$BRANCH \
+          -f description='Deploying from codebuild' \
+          -f environment=$ENVIRONMENT_NAME)
+
+      - deploy_id=$(echo $response | jq '.id')
+
+      - echo Getting build link...
+      - build_link=$(aws codebuild batch-get-builds --ids $CODEBUILD_BUILD_ID --query 'builds[0].logs.deepLink' --output text)
+
       - echo Installing source NPM dependencies...
       - npm install
   build:
@@ -19,12 +53,41 @@ phases:
 
       - echo Building front-end...
       - npm run build
-  post_build:
-    on-failure: CONTINUE
-    commands:
+
       - aws s3 cp --recursive --acl public-read ./dist s3://${DEPLOY_BUCKET}/
       - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./dist/index.html s3://${DEPLOY_BUCKET}/
       - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION} --paths /index.html
+  post_build:
+    on-failure: CONTINUE
+    commands:
+      - |
+        if [ ${CODEBUILD_BUILD_SUCCEEDING:-0} -eq 1 ]; then
+          echo "Creating success status..."
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/$REPO_OWNER/$REPO_NAME/deployments/$deploy_id/statuses \
+            -f environment=$ENVIRONMENT_NAME \
+            -f state='success' \
+            -f log_url=$SUCCESS_URL \
+            -f description='Deployment finished successfully.'
+          echo "Updating repository description..."
+          # The following command requires admin perms
+          # gh repo edit $REPO_OWNER/$REPO_NAME --description "Dev: ${DEV_URL} Prod: ${PROD_URL}"
+        else
+          echo "Creating failure status..."
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/$REPO_OWNER/$REPO_NAME/deployments/$deploy_id/statuses \
+            -f environment=$ENVIRONMENT_NAME \
+            -f state='failure' \
+            -f log_url=$build_link \
+            -f description='Deployment failed.'
+        fi
+
 artifacts:
   files:
     - '**/*'
