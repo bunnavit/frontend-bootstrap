@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { faUnlock } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { z } from 'zod';
-import { Stack, Text, Button, Group, TextInput } from '@mantine/core';
+import { Stack, Text, Button, TextInput, Flex } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useForm, zodResolver } from '@mantine/form';
 import {
@@ -119,10 +119,10 @@ export const VerifyEmailPage = () => {
             id="code"
             label="Verification code"
             description={
-              <Group spacing={20}>
+              <Flex gap={7}>
                 <Text>Enter the verification code that was sent to your email</Text>
                 <Button
-                  size="sm"
+                  size="xs"
                   color="gray"
                   disabled={isResendDisabled}
                   onClick={resendCode}
@@ -130,7 +130,7 @@ export const VerifyEmailPage = () => {
                 >
                   Resend code
                 </Button>
-              </Group>
+              </Flex>
             }
             placeholder="Verification code"
             {...getInputProps('confirmation_code')}

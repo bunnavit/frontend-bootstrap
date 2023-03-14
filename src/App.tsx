@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 import ConfirmPasswordPage from './views/Authentication/ConfirmPasswordPage';
 import { LoginPage } from './views/Authentication/LoginPage';
@@ -102,11 +102,10 @@ const App = () => {
         withNormalizeCSS={true}
         withGlobalStyles={true}
       >
-        <NotificationsProvider>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-          </QueryClientProvider>
-        </NotificationsProvider>
+        <Notifications />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

@@ -57,11 +57,11 @@ export const theme: MantineThemeOverride = {
   },
   fontFamilyMonospace: 'Ubuntu Mono, monospace',
   fontSizes: {
-    xs: 13,
-    sm: 15,
-    md: 17,
-    lg: 19,
-    xl: 23,
+    xs: '0.8rem',
+    sm: '0.9rem',
+    md: '1rem',
+    lg: '1.2rem',
+    xl: '1.4rem',
   },
   colors: themeColors as MantineThemeColorsOverride,
 };
