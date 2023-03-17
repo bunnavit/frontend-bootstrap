@@ -37,6 +37,7 @@ export const WebsocketContextProvider = ({ children }: WebsocketContextProviderP
   };
 
   const onClose = (e: CloseEvent) => {
+    setSession(undefined);
     setIsConnected(false);
     if (e.type === 'close' && !e.wasClean) {
       setIsAuthed(false);
@@ -63,7 +64,7 @@ export const WebsocketContextProvider = ({ children }: WebsocketContextProviderP
     // do zod parsing here with data...
   };
 
-  const [session, connect] = useSession(onOpen, onMessage, onClose);
+  const [session, setSession, connect] = useSession(onOpen, onMessage, onClose);
 
   useEffect(() => {
     if (!session || session.readyState === session.CLOSED) {

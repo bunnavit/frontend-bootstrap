@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { getWebsocketUrl } from '../../util/url';
 import { getWebsocketAuthParams } from '../TokenService';
 
@@ -11,6 +11,7 @@ export type ConnectFN = () => void;
 
 export type SessionHook = [
   WebSocket | undefined,
+  Dispatch<SetStateAction<WebSocket | undefined>>,
   ConnectFN,
   (args: Message) => void,
   () => void
@@ -28,7 +29,7 @@ export const useSession = (
   onMessage: SessionMessageHandler,
   onClose: SessionDisconnectHandler
 ): SessionHook => {
-  const [session, setSession] = useState(null as unknown as WebSocket);
+  const [session, setSession] = useState<WebSocket>();
 
   const updateOpenHandler = () => {
     if (!session) return;
@@ -70,8 +71,8 @@ export const useSession = (
   };
 
   const close = useCallback(() => {
-    if (session.readyState === session.OPEN) session.close();
+    if (session && session.readyState === session.OPEN) session.close();
   }, [session]);
 
-  return [session, connect, sendMessage, close];
+  return [session, setSession, connect, sendMessage, close];
 };
