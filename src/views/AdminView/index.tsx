@@ -1,5 +1,5 @@
 import React from 'react';
-import { faHome } from '@fortawesome/pro-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { Outlet } from 'react-router-dom';
 
 import { PageLayout } from '../../components/PageLayout';

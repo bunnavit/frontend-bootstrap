@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { Flex, Box, Alert, Title, Text } from '@mantine/core';
-import { faCircleExclamation } from '@fortawesome/pro-solid-svg-icons';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as Icon } from '../../assets/coreograph-logo.svg';
 import { useColorModeValue } from '../../hooks/useColorModeValue';

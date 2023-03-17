@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UnstyledButton, Group, ThemeIcon, Text, createStyles } from '@mantine/core';
 import { matchRoutes, useLocation, useNavigate } from 'react-router-dom';
-import { IconDefinition } from '@fortawesome/pro-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export type NavigationLink = {
   label: string;

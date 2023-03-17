@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStyles, Container, Title, Text, Button, SimpleGrid } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/pro-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({

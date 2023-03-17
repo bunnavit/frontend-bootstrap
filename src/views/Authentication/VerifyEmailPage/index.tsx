@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { faUnlock } from '@fortawesome/pro-solid-svg-icons';
+import { faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { z } from 'zod';
 import { Stack, Text, Button, TextInput, Flex } from '@mantine/core';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faUnlock } from '@fortawesome/pro-solid-svg-icons';
+import { faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Stack, Button, Group, TextInput, PasswordInput } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { faCircleExclamation, faUnlock } from '@fortawesome/pro-solid-svg-icons';
+import { faCircleExclamation, faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Alert, Button, Stack, Text, PasswordInput, TextInput } from '@mantine/core';

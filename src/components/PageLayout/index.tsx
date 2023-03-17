@@ -11,7 +11,7 @@ import {
   Group,
   Stack,
 } from '@mantine/core';
-import { faRightFromBracket, faRightToBracket } from '@fortawesome/pro-solid-svg-icons';
+import { faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 import { ReactComponent as Icon } from '../../assets/coreograph-icon.svg';
 import { useUserContext } from '../../context/useUserContext';

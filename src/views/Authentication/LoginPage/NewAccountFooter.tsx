@@ -1,5 +1,5 @@
 import React from 'react';
-import { faArrowRight } from '@fortawesome/pro-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { Button, Text } from '@mantine/core';

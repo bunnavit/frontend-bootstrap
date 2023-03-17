@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { faUnlock } from '@fortawesome/pro-solid-svg-icons';
+import { faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { z } from 'zod';
 
