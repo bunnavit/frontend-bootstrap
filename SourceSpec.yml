@@ -4,6 +4,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
+      - ls -a
+      - cd ..
+      - ls -a
       - aws s3 cp . s3://${REPO_BUCKET}/${REPO_PATH}
  
   post_build:
