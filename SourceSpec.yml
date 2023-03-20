@@ -1,33 +1,19 @@
 version: 0.2
 phases:
-  install:
-    commands:
-      # Install node version in .nvmrc
-      - n `cat $CODEBUILD_SRC_DIR/.nvmrc`
-
-  pre_build:
-    commands:
-      - echo Installing source NPM dependencies...
-      - npm install
+  
   build:
     commands:
       - echo Build started on `date`
 
-      - echo Removing proxies...
-      - npm config get proxy
-      - npm config rm proxy
-      - npm config rm https-proxy
+      - pwd
+      - ls -a
 
-      - echo Building front-end...
-      - npm run build
-
-      - aws s3 cp --recursive ./dist s3://${DEPLOY_BUCKET}/
-      # - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./dist/index.html s3://${DEPLOY_BUCKET}/
-      # - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION} --paths /index.html
+      - aws s3 cp --recursive . s3://${DEPLOY_BUCKET}/
+ 
   post_build:
     on-failure: CONTINUE
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist
+  base-directory: .
