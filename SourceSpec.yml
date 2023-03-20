@@ -4,10 +4,8 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - ls -a
-      - cd ..
-      - ls -a
-      - aws s3 cp . s3://${REPO_BUCKET}/${REPO_PATH}
+      - zip -r ${REPO_PATH}.zip ../src
+      - aws s3 cp ${REPO_PATH}.zip s3://${REPO_BUCKET}/
  
   post_build:
     on-failure: CONTINUE
