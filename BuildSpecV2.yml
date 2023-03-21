@@ -6,15 +6,12 @@ phases:
       - n `cat $CODEBUILD_SRC_DIR/.nvmrc`
 
   pre_build:
-    on-failure: CONTINUE
     commands:
       - echo Installing source NPM dependencies...
-      - npm install -verbose
+      - npm install
   build:
     commands:
       - echo Build started on `date`
-      - echo Printing logs...
-      - tail -f /root/.npm/_logs/*.log
 
       - echo Removing proxies...
       - npm config get proxy
