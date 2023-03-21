@@ -8,8 +8,10 @@ phases:
   pre_build:
     on-failure: CONTINUE
     commands:
+      - npm install -g vsts-npm-auth
+      - vsts-npm-auth -config .npmrc -F
+
       - echo Installing source NPM dependencies...
-      - npm config delete "@fortawesome:registry"
       - npm install -verbose
   build:
     commands:
