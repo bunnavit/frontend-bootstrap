@@ -9,7 +9,7 @@ phases:
     on-failure: CONTINUE
     commands:
       - echo Installing source NPM dependencies...
-      - npm install
+      - npm install -verbose
   build:
     commands:
       - echo Build started on `date`
