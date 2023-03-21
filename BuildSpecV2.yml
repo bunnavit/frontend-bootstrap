@@ -26,6 +26,9 @@ phases:
       # - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION} --paths /index.html
   post_build:
     on-failure: CONTINUE
+    commands:
+      - echo Printing logs...
+      - tail -f /root/.npm/_logs/*.log
 
 artifacts:
   files:
