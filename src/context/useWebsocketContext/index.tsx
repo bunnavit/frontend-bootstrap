@@ -12,10 +12,10 @@ import { showNotification } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../../services/Websocket';
 import { useUserContext } from '../useUserContext';
-import { CustomLoader } from '../../components/CustomLoader';
 import { transformStringToObject } from './util';
 
 export type WebsocketContextValues = {
+  isConnected: boolean;
   session: WebSocket | undefined;
 };
 
@@ -76,16 +76,13 @@ export const WebsocketContextProvider = ({ children }: WebsocketContextProviderP
 
   const value: WebsocketContextValues = useMemo(
     () => ({
+      isConnected,
       session,
     }),
-    [session]
+    [isConnected, session]
   );
 
-  return (
-    <WebsocketContext.Provider value={value}>
-      {isConnected ? children : <CustomLoader message="Connecting to websocket..." />}
-    </WebsocketContext.Provider>
-  );
+  return <WebsocketContext.Provider value={value}>{children}</WebsocketContext.Provider>;
 };
 
 export const useWebsocketContext = () => {
